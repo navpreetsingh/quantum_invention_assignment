@@ -12,7 +12,7 @@ class LinksController < ApplicationController
     links = params[:link]
   	link = current_user.created_links.create(url: links[:url], public: links[:public])
     unless link.public
-      link.user_ids = (current_user.friend_ids + [current_user.id] +  a.inverse_friend_ids).uniq
+      link.user_ids = (current_user.friend_ids + [current_user.id] +  current_user.inverse_friend_ids).uniq
     end
     redirect_to :links
   end
