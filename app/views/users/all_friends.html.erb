@@ -1,0 +1,17 @@
+<h1> FRIENDS </h1>
+
+	<table class="table table-bordered friend_table">
+	  <thead>
+	    <tr>
+	      <th>USERNAME</th>      
+	    </tr>
+	  </thead>
+
+	  <tbody>
+	    <% @friends.each do |st| %>
+	      <tr>
+	        <td><%= link_to st.username, "/#{st.username}" %></td>
+	      </tr>
+	    <% end %>
+	  </tbody>
+	</table>

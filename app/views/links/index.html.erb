@@ -1,0 +1,65 @@
+<p id="notice"><%= notice %></p>
+
+<h1>LINKS</h1>
+
+<% unless current_user.nil? %>
+	<div class="row">
+	  <%= form_for :link, url: links_path, :authenticity_token => true do |f| %>         
+	    
+	    <div class="col-xs-4 col-xx-12">
+	      
+	      <%= f.text_field :url, placeholder: "Url", :class => "form-control", required: true %> 
+	    </div>
+	    <div class="col-xs-4 col-xx-12">
+	      <%= f.select :public, options_for_select([["Public", 1], ["With Friends", 0]]), {:class => 'form-control custom_arrow hrd drop-downsml small_dd', required: true}%>
+	    </div>
+	    
+	    <div class="form_btns">
+	      <%= f.submit "Next", :class => 'btn btn-primary' %>     
+	    </div>    
+	  <% end %>
+	</div>
+<% end%>
+
+<% unless @shared_links.empty? %>
+
+	<h3> SHARED LINKS </h3>
+
+	<table class="table table-bordered">
+	  <thead>
+	    <tr>
+	      <th>Shared By</th>
+	      <th>URL</th>      
+	    </tr>
+	  </thead>
+
+	  <tbody>
+	    <% @shared_links.each do |st| %>
+	      <tr>
+	        <td><%= link_to st.user.username, "/#{st.user.username}" %></td>
+	        <td><%= link_to st.url, default: true %></td>
+	      </tr>
+	    <% end %>
+	  </tbody>
+	</table>
+<% end %>
+
+<h3> PUBLIC LINKS </h3>
+
+	<table class="table table-bordered">
+	  <thead>
+	    <tr>
+	      <th>Shared By</th>
+	      <th>URL</th>      
+	    </tr>
+	  </thead>
+
+	  <tbody>
+	    <% @public_links.each do |st| %>
+	      <tr>
+	        <td><%= st.user.nil? ? "Anonymous" : (link_to st.user.username, "/#{st.user.username}") %></td>
+	        <td><%= link_to st.url, st.url, target: "_blank" %></td>
+	      </tr>
+	    <% end %>
+	  </tbody>
+	</table>
